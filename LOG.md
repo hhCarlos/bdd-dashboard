@@ -9,7 +9,7 @@ Branch: develop
 ### 2. Modulacion de las clases
 Se generan los primeros modulos de la aplicacion en general
 
-Date: -
+Date: 30 Oct 2025
 Branch: feat/class-modules-split
 
 ### 3. Se agrega unit testing al proyecto
