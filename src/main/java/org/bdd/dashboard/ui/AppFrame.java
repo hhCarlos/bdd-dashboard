@@ -1,5 +1,8 @@
 package org.bdd.dashboard.ui;
 
+import org.bdd.dashboard.ui.modules.auth.Login;
+import org.bdd.dashboard.ui.modules.auth.Register;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
@@ -16,6 +19,10 @@ public class AppFrame extends JFrame {
         setSize(1000, 700);
         setLocationRelativeTo(null);
         setContentPane(root);
+
+        // Registrar vistas
+        register("login", new Login(this));
+        register("register", new Register(this));
     }
 
     public void register(String key, JPanel panel) {
