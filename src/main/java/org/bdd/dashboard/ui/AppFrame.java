@@ -21,16 +21,19 @@ public class AppFrame extends JFrame {
         setContentPane(root);
 
         // Registrar vistas
-        register("login", new Login(this));
-        register("register", new Register(this));
+        register(View.LOGIN, new Login(this));
+        register(View.REGISTER, new Register(this));
+
+        // show login by default
+        showView(View.LOGIN);
     }
 
-    public void register(String key, JPanel panel) {
-        views.put(key, panel);
-        root.add(panel, key);
+    public void register(View view, JPanel panel) {
+        views.put(view.name(), panel);
+        root.add(panel, view.key());
     }
 
-    public void showView(String key) {
-        cards.show(root, key);
+    public void showView(View view) {
+        cards.show(root, view.key());
     }
 }

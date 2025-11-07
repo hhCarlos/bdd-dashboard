@@ -1,88 +1,49 @@
 package org.bdd.dashboard.ui.modules.auth;
 
 import org.bdd.dashboard.ui.AppFrame;
+import org.bdd.dashboard.ui.View;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static org.bdd.dashboard.ui.components.UIUtils.*;
+import static org.bdd.dashboard.ui.modules.auth.AuthText.*;
 
-public class Login extends JPanel {
-    private final JTextField userField = new JTextField(24);
-    private final JPasswordField passField = new JPasswordField(24);
-    private final JLabel linkRegister = link("Registrate");
-    private final JLabel linkForgotPassword = link("Olvidé mi contraseña");
-    private final JButton btnLogin = new JButton("Aceptar");
-    private final JButton btnClear = new JButton("Limpiar");
+public class Login extends AuthFormBase {
+    private JTextField user = new JTextField(24);
+    private JPasswordField password = new JPasswordField(24);
 
     public Login(AppFrame app) {
-        setLayout(new GridBagLayout());
-        JPanel form = new JPanel(new GridBagLayout());
-        setBorder(BorderFactory.createEmptyBorder(24,24,24,24));
+        super(app, TITLE_LOGIN);
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(8,8,8,8);
+        // Form fields
+        addField(FIELD_NAME, user);
+        addField(FIELD_PASSWORD, password);
 
-        JLabel title = new JLabel("Login", SwingConstants.CENTER);
-        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
-        form.add(wrap(title), c);
-
-        // Form
-        c.gridy++;
-        form.add(wrap(labeled("Usuario", userField)), c);
-        c.gridy++;
-        form.add(wrap(labeled("Contraseña", passField)), c);
-
-        add(form);
-
-        // links
+        // Links
         JPanel links = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 0));
-        links.add(linkRegister);
+        links.add(createLink(TITLE_REGISTER, () -> app.showView(View.REGISTER)));
         links.add(new JLabel("|"));
-        links.add(linkForgotPassword);
-        c.gridy++;
+        links.add(createLink(TITLE_FORGOT_PASSWORD, () -> app.showView(View.REGISTER)));
+        addSection(links);
 
-        add(wrap(links), c);
+        // Buttons
+        JButton btnRegister = new JButton(BUTTON_ACCEPT);
+        JButton btnClean = new JButton(BUTTON_CLEAN);
 
-        // buttons
-        JPanel actions = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 0));
-        actions.add(btnLogin);
-        actions.add(btnClear);
-        c.gridy++;
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 0));
+        buttons.add(btnRegister);
+        buttons.add(btnClean);
+        addSection(buttons);
 
-        add(wrap(actions), c);
-
-        // Acciones de login y limpiar
-        btnLogin.addActionListener(e -> {
-            System.out.println("Boton de aceptar presionado");
-            String user = userField.getText();
-            String pass = new String(passField.getPassword());
-            System.out.println("Usuario: " + user + " | Contraseña: " + pass);
+        // Actions
+        btnRegister.addActionListener(e -> {
+            System.out.println("Name: " + user.getText());
+            System.out.println("Lastname: " + password.getText());
         });
 
-        btnClear.addActionListener(e -> {
-            System.out.println("Boton de limpiar presionado");
-            userField.setText("");
-            passField.setText("");
-        });
-
-        // Acciones de los enlaces Registrate y Olvide Password
-        linkRegister.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                System.out.println("Click en registrate.");
-                app.showView("register");
-            }
-        });
-
-        linkForgotPassword.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                System.out.println("Click en Olvide password.");
-            }
+        btnClean.addActionListener(e -> {
+            user.setText("");
+            password.setText("");
         });
     }
 }

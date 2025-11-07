@@ -1,47 +1,59 @@
 package org.bdd.dashboard.ui.modules.auth;
 
 import org.bdd.dashboard.ui.AppFrame;
-import static org.bdd.dashboard.ui.components.UIUtils.*;
+import org.bdd.dashboard.ui.View;
 
 import javax.swing.*;
 import java.awt.*;
 
+import static org.bdd.dashboard.ui.modules.auth.AuthText.*;
 
-public class Register extends JPanel {
-    private JLabel linkLogin = link("Login");
+public class Register extends AuthFormBase {
+    private JTextField name = new JTextField(24);
+    private JTextField lastName = new JTextField(24);
+    private JTextField email = new JTextField(24);
+    private JPasswordField password = new JPasswordField(24);
+    private JPasswordField confirmPassword = new JPasswordField(24);
 
     public Register(AppFrame app) {
-        setLayout(new GridBagLayout());
-        JPanel form = new JPanel(new GridBagLayout());
-        setBorder(BorderFactory.createEmptyBorder(24,24,24,24));
+        super(app, TITLE_REGISTER);
 
-        GridBagConstraints c = new GridBagConstraints();
-        c.gridx = 0;
-        c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(8,8,8,8);
+        // Form Fileds
+        addField(FIELD_NAME, name);
+        addField(FIELD_LAST_NAME, lastName);
+        addField(FIELD_EMAIL, email);
+        addField(FIELD_PASSWORD, password);
+        addField(FIELD_CONFIRM_PASSWORD, confirmPassword);
 
-        JLabel title = new JLabel("Registro de usuario", SwingConstants.CENTER);
-        title.setFont(title.getFont().deriveFont(Font.BOLD, 20f));
-        form.add(wrap(title), c);
-
-        add(form);
-
+        // Links
         JPanel links = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 0));
-        links.add(linkLogin);
+        links.add(createLink(TITLE_LOGIN, () -> app.showView(View.LOGIN)));
         links.add(new JLabel("|"));
-        links.add(linkLogin);
-        c.gridy++;
+        links.add(createLink(TITLE_FORGOT_PASSWORD, () -> app.showView(View.LOGIN)));
+        addSection(links);
 
-        add(wrap(links), c);
+        // Buttons
+        JButton btnRegister = new JButton(BUTTON_ACCEPT);
+        JButton btnClean = new JButton(BUTTON_CLEAN);
 
-        // Acciones de los links
-        linkLogin.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mouseClicked(java.awt.event.MouseEvent e) {
-                System.out.println("Click en login.");
-                app.showView("login");
-            }
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 16, 0));
+        buttons.add(btnRegister);
+        buttons.add(btnClean);
+        addSection(buttons);
+
+        // Actions
+        btnRegister.addActionListener(e -> {
+            System.out.println("Name: " + name.getText());
+            System.out.println("Lastname: " + lastName.getText());
+            System.out.println("Email: " + email.getText());
+        });
+
+        btnClean.addActionListener(e -> {
+            name.setText("");
+            lastName.setText("");
+            email.setText("");
+            password.setText("");
+            confirmPassword.setText("");
         });
     }
 }

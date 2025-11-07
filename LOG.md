@@ -18,9 +18,12 @@ Se generan enlaces para secciones de formularios y botones para acceder.
 Date: 6 Nov 2025
 Branch: feat/auth-components
 
+### 4. Se generan enlaces y botones de registro
+Se generan campos para la pantalla de registro.
 
 
-
+Date: 6 Nov 2025
+Branch: feat/auth-components-register
 
 
 ### NO_DONE. Se agrega unit testing al proyecto
